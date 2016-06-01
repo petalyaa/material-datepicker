@@ -43,6 +43,14 @@ function MaterialDatepicker(o) {
 		debugMode : false,
 		closeOnBlur : true	
 	};
+	
+	this.eventBeforeShow = "md.before.show";
+	this.eventAfterShow = "md.after.show";
+	this.eventBeforeHide = "md.before.hide";
+	this.eventAfterHide = "md.after.hide";
+	this.eventBeforeCancel = "md.before.cancel";
+	this.eventAfterCancel = "md.after.cancel";
+	
 	this.initialDayName = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 	this.shortDayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	this.monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -52,12 +60,27 @@ function MaterialDatepicker(o) {
 	this.calendarYearHeader = null;
 	this.calendarDateHolder = null;
 	this.overlay = null;
+	this.events = [];
 	this.currentActiveView = 'date';
 	this.linkItemPrefixId = this.generateRandomId();
 	this.onDateSelectedCallback = null;
 	this.options = defaultOptions.extend(o);
 	this.init();
 }
+
+MaterialDatepicker.prototype.executeEvent = function(eventName){
+	var callback = null;
+	if(this.events && this.events != null && this.events.length > 0) {
+		for(var i = 0; i < this.events.length; i++) {
+			var event = this.events[i];
+			var name = event.name;
+			if(eventName && eventName != null && eventName != '' && eventName == name) {
+				callback = event.callback;
+			}
+		}
+	}
+	if(callback != null) callback(this);
+};
 
 MaterialDatepicker.prototype.generateRandomId = function(){
 	var text = 'material_datepicker_item_' + getRandomText() + "_" + getRandomNumber() + "_";
@@ -75,6 +98,10 @@ MaterialDatepicker.prototype.generateRandomId = function(){
 	}
 	
 	return text;
+};
+
+MaterialDatepicker.prototype.on = function(event, callback){
+	this.events.push({name : event, callback : callback});
 };
 
 MaterialDatepicker.prototype.init = function(){
@@ -317,7 +344,9 @@ MaterialDatepicker.prototype.draw = function(){
 	}
 	
 	function onCancel() {
+		parentThis.executeEvent(parentThis.eventBeforeCancel);
 		parentThis.hide();
+		parentThis.executeEvent(parentThis.eventAfterCancel);
 	}
 	
 	function onOKClick() {
@@ -521,10 +550,12 @@ MaterialDatepicker.prototype.hide = function(){
 	if(this.isVisible) {
 		var parentThis = this;
 		parentThis.log('Hiding datepicker...');
+		parentThis.executeEvent(parentThis.eventBeforeHide);
 		parentThis.datepicker.className = 'material_datepicker_container ' + parentThis.orientationClass + ' material_datepicker_hide';
 		var transEnd = function(){
 			parentThis.overlay.className = 'material_datepicker_overlay material_datepicker_overlay_hide';
 			parentThis.datepicker.removeEventListener('transitionend', transEnd);
+			parentThis.executeEvent(parentThis.eventAfterHide);
 		};
 		parentThis.datepicker.addEventListener('transitionend', transEnd, false);
 		parentThis.isVisible = false;
@@ -549,6 +580,7 @@ MaterialDatepicker.prototype.isValidDate = function(d){
 MaterialDatepicker.prototype.show = function(opts){
 	if(!this.isVisible) {
 		this.log('Showing datepicker...');
+		this.executeEvent(this.eventBeforeShow);
 		if(opts && opts != null) {
 			var callback = opts.onDateSelected;
 			var initialDate = opts.initialDate;
@@ -563,5 +595,6 @@ MaterialDatepicker.prototype.show = function(opts){
 		this.overlay.className = 'material_datepicker_overlay material_datepicker_overlay_show';
 		this.datepicker.className = 'material_datepicker_container ' + this.orientationClass + ' material_datepicker_show';
 		this.isVisible = true;
+		this.executeEvent(this.eventAfterShow);
 	}
 };
