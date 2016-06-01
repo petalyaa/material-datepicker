@@ -1,6 +1,15 @@
 # Material Datepicker #
 Javascript datepicker inspired  by Google material design.
 
+> * [Description](#description)
+> * [Dependencies](#dependencies)
+> * [Usage](#usage)
+> * [Constructor](#constructor)
+> * [Methods](#methods)
+> * [Events](#events)
+> * [Screenshots](#screenshots)
+> * [License](#license)
+
 ### Description ###
 Javascript datepicker inspired  by Google material design. Simple and easy to
 use the library. Just include the js and css file and use it. I've build this
@@ -102,6 +111,8 @@ datepicker.on("md.before.show", function(e){
 
 ### Screenshots ###
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/1.png)
+
+![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/2.png)
 
 ### Issues ###
 * Not responsive (Now only support desktop view)
