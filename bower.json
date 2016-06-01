@@ -1,6 +1,7 @@
 {
   "name": "material-datepicker",
   "homepage": "https://github.com/petalyaa/material-datepicker",
+  "version": "v0.1",
   "authors": [
     "Mohd Khairul Ikhwan bin Kamarudin <petalyaa@gmail.com>"
   ],
