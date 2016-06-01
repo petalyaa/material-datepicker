@@ -1,14 +1,17 @@
-# Material Datepicker
+# Material Datepicker #
+Javascript datepicker inspired  by Google material design.
+
+### Description ###
 Javascript datepicker inspired  by Google material design. Simple and easy to
 use the library. Just include the js and css file and use it. I've build this
 to use with my current project and here I share the source code. This is build 
 on plain javascript. 
 
-# Dependencies
+### Dependencies ###
 * font-awesome
 * roboto-fontface (Optional) - This is only to give the datepicker more material look with the roboto font.
 
-# Usage
+### Usage ###
 Include these two css files in your page.
 
 ```html
@@ -56,10 +59,14 @@ For example :
 </html>
 ```
 
-# Screenshots
+### Screenshots ###
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/1.png)
 
-# License
+### Issues ###
+* Not responsive (Now only support desktop view)
+* Only landscape datepicker supported. (portrait view still under development)
+
+### License ###
 The MIT License (MIT)
 
 Copyright (c) 2016 Mohd Khairul Ikhwan bin Kamarudin
