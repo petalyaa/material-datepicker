@@ -47,7 +47,7 @@ For example :
 var datepicker = new MaterialDatepicker(); // Initialize the datepicker
 buttonMaterialDatepicker.show(); // To show the datepicker
 // OR
-buttonMaterialDatepicker.hide();
+buttonMaterialDatepicker.hide(); // To hide the datepicker
 ```
 
 [Back to Top](#material-datepicker)
