@@ -5,9 +5,9 @@
     "Mohd Khairul Ikhwan bin Kamarudin <petalyaa@gmail.com>"
   ],
   "description": "A javascript based datepicker inspired by Google material design",
-  "main": ["./js/material-datepicker.js","./css/material-datepicker.css"]
+  "main": "./js/material-datepicker.js",
   "keywords": [
-    "material-datepicker", "material", "datepicker"
+    "material-datepicker"
   ],
   "license": "MIT",
   "ignore": [
