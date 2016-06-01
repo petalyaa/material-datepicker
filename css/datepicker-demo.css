@@ -1,0 +1,49 @@
+html, body {
+	padding : 10px;
+	margin : 0;
+	font-family : "Roboto";
+	background : #e2e2e2;
+}
+
+.card {
+	background : #fff;
+	padding : 0px;
+	width : 500px;
+	margin-left : auto;
+	margin-right : auto;
+	-moz-box-shadow : 0px 2px 10px 3px rgba(0,0,0,.3);
+	-webkit-box-shadow : 0px 2px 10px 3px rgba(0,0,0,.3);
+	box-shadow : 0px 2px 10px 3px rgba(0,0,0,.3);
+	border : 1px solid rgba(0,0,0,.4);
+	margin-top : 20px;
+	border-radius : 5px;
+}
+
+.page_title {
+	font-size : 48px;
+	padding : 30px;
+	text-align : center;
+	color : rgba(0,0,0,.3);
+	cursor : default;
+	margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+.page_title:hover {
+	color : rgba(0,0,0,1);
+	
+}
+
+.card .header {
+	border-bottom : 2px solid #3F51B5;
+}
+
+.card .header .title {
+	padding : 20px 0 5px 20px;
+	font-size : 24px;
+}
+
+.card .content {
+	padding : 20px;
+}

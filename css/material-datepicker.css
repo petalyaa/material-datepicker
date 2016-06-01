@@ -1,0 +1,422 @@
+.material_datepicker_overlay {
+	position : fixed;
+	height : 100%;
+	width : 100%;
+	background : rgba(0,0,0,.4);
+	top : 0;
+	left : 0;
+}
+
+.material_datepicker_hide {
+	transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 0;
+    transform: translate3d(0px, -450px, 0px);
+}
+
+.material_datepicker_show {
+	transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
+}
+
+.year_list_item {
+	margin-left : 0;
+	padding-left : 0;
+}
+
+.year_list_item a {
+	color : #000;
+	text-decoration : none;
+	padding : 10px;
+	display : block;
+}
+
+.year_list_item.active a {
+	font-size : 24px;
+	color : #E91E63;
+	font-weight : 700;
+}
+
+.landscape_year_view {
+	height: 270px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align : center;
+}
+
+.material_datepicker_overlay_hide {
+	opacity : 0;
+	transition: opacity 250ms;
+	z-index : -1000000;
+}
+
+.material_datepicker_overlay_show {
+	opacity : 1;
+	transition: opacity 250ms;
+	z-index : 1000000;
+}
+
+.material_datepicker_container {
+	cursor : default;
+	background : #fff;
+	z-index : 10000;
+	position : absolute;
+	top : 50%;
+	left : 50%;
+	box-shadow : rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px;
+	-webkit-box-shadow : rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px;
+	-moz-box-shadow : rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px;
+}
+
+.material_datepicker_container.datepicker_landscape {
+	width : 480px;
+	height : 330px;
+	margin-left : -240px;
+	margin-top : -165px;
+}
+
+.material_datepicker_container.datepicker_potrait {
+	width : 310px;
+	height : 434px;
+	margin-left : -155px;
+	margin-top : -217px;
+}
+
+.material_datepicker_container .landscape_header {
+	width : 165px;
+	height : 330px;
+	background : rgb(0, 151, 167);
+	color : #FFF;
+	float : left;
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content {
+	padding : 20px;	
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .year {
+	font-weight: 700;
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .year:hover, .material_datepicker_container .landscape_header .landscape_header_content .date:hover {
+	cursor : pointer;
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .date {
+	font-weight: 700;
+    font-size: 32px;
+    padding-top: 10px;
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .date_show_down {
+	position: absolute;
+    height: 270px;
+    width: 128px;
+    top: 30px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 1;
+    transform: translate3d(0px, 9px, 0px);
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .date_hide_up {
+	position: absolute;
+    height: 270px;
+    width: 128px;
+    top: 30px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 0;
+    transform: translate3d(0px, -30px, 0px);
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .date_show_up {
+	position: absolute;
+    height: 270px;
+    width: 128px;
+    top: 30px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 1;
+    transform: translate3d(0px, 9px, 0px);
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .date_hide_down {
+	position: absolute;
+    height: 270px;
+    width: 128px;
+    top: 30px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 0;
+    transform: translate3d(0px, 200px, 0px);
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .datepicker_label_inactive {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.material_datepicker_container .landscape_header .landscape_header_content .datepicker_label_active {
+	color: rgba(255, 255, 255, 1);
+}
+
+.datepicker-btn {
+	cursor : pointer;
+	padding : 10px 15px;
+	border : 0;
+	-moz-box-shadow : 1px 2px 5px 1px rgba(0,0,0,.7);
+	-webkit-box-shadow : 1px 2px 5px 1px rgba(0,0,0,.7);
+	box-shadow : 1px 2px 5px 1px rgba(0,0,0,.7);
+}
+
+.datepicker-btn:active, .datepicker-btn:focus {
+	outline : none;
+}
+
+.datepicker-btn.datepicker-btn-default {
+	background : #009688;
+	color : #fff;
+}
+
+.datepicker-btn.datepicker-btn-link {
+	background : transparent;
+	box-shadow : none;
+	-webkit-box-shadow : none;
+	-moz-box-shadow : none;
+	color : rgb(0, 151, 167);
+	font-weight : 700;
+}
+
+.material_datepicker_container .landscape_content {
+	float : left;
+	width : 315px;
+	height : 330px;
+	background : #fff;
+	color : #2e2e2e;
+	position : relative;
+}
+
+.material_datepicker_container .landscape_content .action {
+	padding : 0;
+	position : absolute;
+	bottom : 5px;
+	right : 0;
+	width : 100%;
+	text-align : right;
+}
+
+.date_view_year_section {
+	text-align : center;
+	height : 48px;
+}
+
+.date_view_year_section .year_section_left_arrow, .date_view_year_section .year_section_right_arrow {
+	display : inline-block;
+	height : 48px;
+	width : 48px;
+}
+
+.date_view_year_section .date_view_year_label {
+	display : inline-block;
+	height : 48px;
+	width : 200px;
+}
+
+.year_section_left_arrow_container, .year_section_right_arrow_container, .date_view_year_label_container {
+	padding : 10px;
+	font-weight : 700;
+	cursor : default;
+}
+
+.datepicker_calendar {
+	width : 294px;
+	margin-left : auto;
+	margin-right : auto;
+	margin-top : 5px;
+}
+
+.datepicker_calendar .day_header_label {
+	width: 42px;
+    height: 24px;
+    display: block;
+    float: left;
+    text-align: center;
+    color: rgba(0,0,0,.5);
+    font-size: 14px;
+    padding: 4px 10px;
+    box-sizing: border-box;
+}
+
+.date_block {
+	width: 42px;
+    height: 34px;
+    display: block;
+    float: left;
+    text-align: center;
+    color: rgba(0,0,0,1);
+    font-size: 12px;
+    padding: 15px;
+    box-sizing: border-box;
+    position : relative;
+}
+
+.date_block_cursor_inactive:hover {
+	cursor : pointer;
+}
+
+.date_block_cursor_active:hover {
+	cursor : default;
+}
+
+.date_block_hover_out {
+	background: rgb(0, 151, 167);
+    opacity: 0;
+    width: 32px;
+    height: 32px;
+    display: block;
+    border-radius: 50px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transform: scale(0); 
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; 
+}
+
+.date_block_hover_in {
+	background: rgb(0, 151, 167);
+    opacity: .6;
+    width: 32px;
+    height: 32px;
+    display: block;
+    border-radius: 50px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transform: scale(1); 
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; 
+}
+
+.date_block_selected {
+	color: #fff;
+	background : rgb(0, 151, 167);
+	border-radius : 50px;
+	position : absolute;
+	top : 5px;
+	left : 5px;
+	width : 32px;
+	height : 32px;
+	transform: scale(1.1); 
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.clearfix {
+	clear : both;
+}
+
+.arrow_button {
+	padding: 0px;
+    height: 48px;
+    width: 48px;
+    font-size: 24px;
+    border-radius: 40px;
+    color: #000;
+}
+
+.year_section_left_arrow_container, .year_section_right_arrow_container {
+	border: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    font-family: Roboto, sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    font-size : 24px;
+    font-weight: 700;
+    transform: translate3d(0px, 0px, 0px);
+    position: relative;
+    overflow: visible;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    padding: 12px;
+    width: 48px;
+    height: 48px;
+    background: none;
+}
+
+.arrow_span {
+	height: 100%; 
+	width: 100%; 
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	overflow: hidden;
+}
+
+.ripple {
+	position: relative;
+  	overflow: hidden;
+}
+
+.ripple:after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 160px;
+	height: 160px;
+	margin-left: -80px;
+	margin-top: -80px;
+	background: #E0F2F1;
+	border-radius: 100%;
+	opacity: .6;
+	transform: scale(0);
+}
+
+.arrow_ripple {
+	position: relative;
+  	overflow: hidden;
+}
+
+.arrow_ripple:after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 48px;
+	height: 48px;
+	margin-left: -24px;
+	margin-top: -24px;
+	background: #E0F2F1;
+	border-radius: 100%;
+	opacity: .6;
+	transform: scale(0);
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.ripple:not(:active):after, .arrow_ripple:not(:active):after {
+  animation: ripple 1s ease-out;
+}
+
+/* fixes initial animation run, without user input, on page load.
+ */
+.ripple:after, .arrow_ripple:after  {
+  visibility: hidden;
+}
+
+.ripple:focus:after, .arrow_ripple:focus:after {
+  visibility: visible;
+}

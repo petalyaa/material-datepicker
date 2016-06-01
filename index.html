@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Javascript test</title>
+		<link rel="stylesheet" href="bower_components/roboto-fontface/css/roboto-fontface.css">
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="css/datepicker-demo.css">
+		<link rel="stylesheet" href="css/material-datepicker.css">
+		<script type="text/javascript" src="js/material-datepicker.js"></script>
+		
+	</head>
+	<body>
+		<div class="page_title">
+			<i class="fa fa-calendar"></i> Material Datepicker
+		</div>
+		<div class="card">
+			<div class="header">
+				<div class="title">
+					Via Button
+				</div>
+			</div>
+			<div class="content">
+				<p>Trigger using a button. Click button below to show the datepicker.</p>
+				<button class="datepicker-btn datepicker-btn-default ripple" id="l_trigger_button">Show Datepicker (Landscape)</button>
+				<button class="datepicker-btn datepicker-btn-default ripple" id="p_trigger_button">Show Datepicker (Potrait)</button>
+				<p><b>Selected Date :</b> <span id="selected_date_final">-</span> </p>
+			</div>
+		</div>
+		
+		<div class="card">
+			<div class="header">
+				<div class="title">
+					Via Input Text
+				</div>
+			</div>
+			<div class="content">
+				<p>Trigger using a form text input. Click input below to show the datepicker.</p>
+				<input style="padding : 10px;" type="text" id="l_trigger_input" />
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			var l_options = {
+				orientation : 'landscape',
+				debugMode : true
+			};
+			var l_materialDatepicker = new MaterialDatepicker(l_options);
+			var l_triggerBtn = document.getElementById("l_trigger_button");
+			l_triggerBtn.onclick = function(){
+				l_materialDatepicker.show({
+					onDateSelected : onLDateSelected,
+					initialDate : new Date(document.getElementById('selected_date_final').innerHTML)
+				});
+			};
+			
+			var input_options = {
+					orientation : 'landscape',
+					debugMode : true
+			};
+			var l_inputMaterialDatePicker = new MaterialDatepicker(input_options);
+			var l_trigger_input = document.getElementById('l_trigger_input');
+			l_trigger_input.onclick = function(){
+				l_inputMaterialDatePicker.show({
+					onDateSelected : onInputDateSelected,
+					initialDate : new Date(this.value)
+				});
+			};
+			
+			var p_options = {
+				orientation : 'potrait',
+				debugMode : true
+			};
+			var p_materialDatepicker = new MaterialDatepicker(p_options);
+			var p_triggerBtn = document.getElementById("p_trigger_button");
+			p_triggerBtn.onclick = function(){
+				p_materialDatepicker.show({onDateSelected : onPDateSelected});
+			};
+				
+			function onPDateSelected(date) {
+				
+			}
+			
+			function onLDateSelected(date) {
+				document.getElementById('selected_date_final').innerHTML = date;
+			}
+			
+			function onInputDateSelected(date) {
+				l_trigger_input.value = date;
+			}
+			
+		</script>
+	</body>
+</html>
