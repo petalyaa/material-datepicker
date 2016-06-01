@@ -39,7 +39,7 @@ Object.prototype.extend = function(obj) {
 
 function MaterialDatepicker(o) {
 	var defaultOptions = {
-		orientation : 'potrait',
+		orientation : 'landscape',
 		debugMode : false,
 		closeOnBlur : true	
 	};
