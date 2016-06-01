@@ -45,17 +45,9 @@ Now that you already load all the required file, you can start using the datepic
 For example :
 ```javascript
 var datepicker = new MaterialDatepicker(); // Initialize the datepicker
-var button = document.getElementById("trigger_button");
-button.onclick = function(){
-	// Show the datepicker
-	buttonMaterialDatepicker.show({
-		onDateSelected : onDateSelected, // Callback when date is selected
-		initialDate : new Date(2016, 4, 1) // initial date to show
-	});
-};
-function onDateSelected(date) {
-	// Do something with the 'date' object
-}
+buttonMaterialDatepicker.show(); // To show the datepicker
+// OR
+buttonMaterialDatepicker.hide();
 ```
 
 [Back to Top](#material-datepicker)
