@@ -29,34 +29,19 @@ Include these two css files in your page.
 Now that you already load all the required file, you can start using the datepicker anywhere in your code.
 
 For example :
-```html
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Datepicker</title>
-		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-		<link rel="stylesheet" href="bower_components/material-datepicker/css/material-datepicker.css">
-		<link rel="stylesheet" href="bower_components/roboto-fontface/css/roboto-fontface.css">
-		<script type="text/javascript" src="bower_components/material-datepicker/js/material-datepicker.js"></script>
-	</head>
-	<body>
-		<button id="trigger_button">Pick A Date</button>
-		<p id="selected_date_final"></p>
-		<script type="text/javascript">
-			var buttonMaterialDatepicker = new MaterialDatepicker();
-			var triggerBtn = document.getElementById("trigger_button");
-			triggerBtn.onclick = function(){
-				buttonMaterialDatepicker.show({
-					onDateSelected : onButtonDatepickerSelected,
-					initialDate : new Date(document.getElementById('selected_date_final').innerHTML)
-				});
-			};
-			function onButtonDatepickerSelected(date) {
-				document.getElementById('selected_date_final').innerHTML = date;
-			}
-		</script>
-	</body>
-</html>
+```javascript
+var datepicker = new MaterialDatepicker(); // Initialize the datepicker
+var button = document.getElementById("trigger_button");
+button.onclick = function(){
+	// Show the datepicker
+	buttonMaterialDatepicker.show({
+		onDateSelected : onDateSelected, // Callback when date is selected
+		initialDate : new Date(2016, 4, 1) // initial date to show
+	});
+};
+function onDateSelected(date) {
+	// Do something with the 'date' object
+}
 ```
 
 ### Screenshots ###
@@ -67,6 +52,7 @@ For example :
 * Only landscape datepicker supported. (portrait view still under development)
 
 ### License ###
+```
 The MIT License (MIT)
 
 Copyright (c) 2016 Mohd Khairul Ikhwan bin Kamarudin
@@ -88,3 +74,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
