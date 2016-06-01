@@ -44,6 +44,62 @@ function onDateSelected(date) {
 }
 ```
 
+### Constructor ###
+To construct simple datepicker, simply use `new MaterialDatepicker()`. But you can also provide option to the datepicker by passing the options to the constructor.
+
+| Option Name | Data Type | Accepted Value       | Default Value | Required | Description                                                                         |
+|-------------|-----------|----------------------|---------------|----------|-------------------------------------------------------------------------------------|
+| orientation | string    | landscape,portrait | landscape     | No       | Orientation for the datepicker (__NOTE__ : For portrait, still not working for now) |
+| debugMode   | boolean   | true,false         | false         | No       | Flag either to display the debug line in the console or not                         |
+| closeOnBlur | boolean   | true,false         | true          | No       | Flag either to close the datepicker when user click outside the datepicker          |
+
+For example :
+```javascript
+var options = {
+    orientation : 'landscape',
+    debugMode : true,
+    closeOnBlur : true
+};
+var datepicker = new MaterialDatepicker(options);
+```
+
+### Methods ###
+3 basic methods available to be use are as per below.
+
+* `.show(options[Optional])` - This method is used to show the datepicker. This method also accept optional two options which described in the table below :
+  
+  | Options        | Data Type | Default Value | Required | Description                                                          |
+  |----------------|-----------|---------------|----------|----------------------------------------------------------------------|
+  | onDateSelected | function  | -             | No       | Callback to be trigger when user select the date and click OK button |
+  | initialDate    | date      | Current date  | No       | Initial date to be pre-select when the datepicker is visible         |
+
+* `.hide()` - Hide the datepicker. This method does not accept any option.
+* `.on(eventName, callback)` - This method is used to bind event to custom callback. Refer [events](#events) for detail.
+
+### Events ###
+This datepicker support multiple events based on the table below.
+
+| Event Name       | Description                                                                                                   |
+|------------------|---------------------------------------------------------------------------------------------------------------|
+| md.before.show   | Event fire __before__ the dialog is visible.                                                                  |
+| md.after.show    | Event fire __after__ the dialog is visible.                                                                   |
+| md.before.hide   | Event fire __before__ the dialog is hidden. (Note that this will also be call when cancel button is clicked.) |
+| md.after.hide    | Event fire __after__ the dialog is hidden. (Note that this will also be call when cancel button is clicked.)  |
+| md.before.cancel | Event fire __before__ the dialog is cancel.                                                                   |
+| md.after.cancel  | Event fire __after__ the dialog is cancelled.                                                                 |
+
+To bind a specific event that you require, use below function.
+
+`datepicker.on(eventName, callback);`
+
+For example :
+```javascript
+datepicker.on("md.before.show", function(e){
+    console.log("Before datepicker is shown...");
+});
+
+```
+
 ### Screenshots ###
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/1.png)
 
