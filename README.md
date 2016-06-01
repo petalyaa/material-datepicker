@@ -8,6 +8,7 @@ Javascript datepicker inspired  by Google material design.
 > * [Methods](#methods)
 > * [Events](#events)
 > * [Screenshots](#screenshots)
+> * [Credit](#credit)
 > * [License](#license)
 
 ### Description ### 
@@ -135,7 +136,8 @@ datepicker.on("md.before.show", function(e){
 [Back to Top](#material-datepicker)
 
 ### Credit ###
-The source code for this project is 100% by me but the design for the datepicker is copied from another material project.
+The source code for this project is 100% by me but the design for the datepicker is copied from another material project because I need it in plain javascript and not with react.js. 
+
 I refer to the datepicker in this project :- [Material-UI](http://www.material-ui.com)
 
 [Back to Top](#material-datepicker)
