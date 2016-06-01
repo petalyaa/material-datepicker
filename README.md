@@ -10,15 +10,19 @@ Javascript datepicker inspired  by Google material design.
 > * [Screenshots](#screenshots)
 > * [License](#license)
 
-### Description ###
+### Description ### 
 Javascript datepicker inspired  by Google material design. Simple and easy to
 use the library. Just include the js and css file and use it. I've build this
 to use with my current project and here I share the source code. This is build 
 on plain javascript. 
 
+[Back to Top](#material-datepicker)
+
 ### Dependencies ###
 * font-awesome
 * roboto-fontface (Optional) - This is only to give the datepicker more material look with the roboto font.
+
+[Back to Top](#material-datepicker)
 
 ### Usage ###
 Include these two css files in your page.
@@ -53,6 +57,8 @@ function onDateSelected(date) {
 }
 ```
 
+[Back to Top](#material-datepicker)
+
 ### Constructor ###
 To construct simple datepicker, simply use `new MaterialDatepicker()`. But you can also provide option to the datepicker by passing the options to the constructor.
 
@@ -72,6 +78,8 @@ var options = {
 var datepicker = new MaterialDatepicker(options);
 ```
 
+[Back to Top](#material-datepicker)
+
 ### Methods ###
 3 basic methods available to be use are as per below.
 
@@ -84,6 +92,8 @@ var datepicker = new MaterialDatepicker(options);
 
 * `.hide()` - Hide the datepicker. This method does not accept any option.
 * `.on(eventName, callback)` - This method is used to bind event to custom callback. Refer [events](#events) for detail.
+
+[Back to Top](#material-datepicker)
 
 ### Events ###
 This datepicker support multiple events based on the table below.
@@ -109,14 +119,26 @@ datepicker.on("md.before.show", function(e){
 
 ```
 
+[Back to Top](#material-datepicker)
+
 ### Screenshots ###
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/1.png)
 
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/2.png)
 
+[Back to Top](#material-datepicker)
+
 ### Issues ###
 * Not responsive (Now only support desktop view)
 * Only landscape datepicker supported. (portrait view still under development)
+
+[Back to Top](#material-datepicker)
+
+### Credit ###
+The source code for this project is 100% by me but the design for the datepicker is copied from another material project.
+I refer to the datepicker in this project :- [Material-UI](http://www.material-ui.com)
+
+[Back to Top](#material-datepicker)
 
 ### License ###
 ```
@@ -142,3 +164,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+[Back to Top](#material-datepicker)
