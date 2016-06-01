@@ -50,10 +50,10 @@ Now that you already load all the required file, you can start using the datepic
 
 For example :
 ```javascript
-var datepicker = new MaterialDatepicker(); // Initialize the datepicker
-buttonMaterialDatepicker.show(); // To show the datepicker
+var datepicker = new MaterialDatepicker(); // init
+datepicker.show(); // show
 // OR
-buttonMaterialDatepicker.hide(); // To hide the datepicker
+datepicker.hide(); // hide
 ```
 
 [Back to Top](#material-datepicker)
