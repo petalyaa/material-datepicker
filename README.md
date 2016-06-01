@@ -11,7 +11,7 @@ Javascript datepicker inspired  by Google material design.
 > * [Credit](#credit)
 > * [License](#license)
 
-### Description ### 
+### Description ###
 Javascript datepicker inspired  by Google material design. Simple and easy to
 use the library. Just include the js and css file and use it. I've build this
 to use with my current project and here I share the source code. This is build 
