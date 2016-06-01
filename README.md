@@ -2,6 +2,7 @@
 Javascript datepicker inspired  by Google material design.
 
 > * [Description](#description)
+> * [Installation](#installation)
 > * [Dependencies](#dependencies)
 > * [Usage](#usage)
 > * [Constructor](#constructor)
@@ -18,6 +19,11 @@ to use with my current project and here I share the source code. This is build
 on plain javascript. 
 
 [Back to Top](#material-datepicker)
+
+### Installation ###
+Use bower to install the package or download zip and put it in your project. To use bower use below command :
+
+`bower install -g material-datepicker`
 
 ### Dependencies ###
 * font-awesome
