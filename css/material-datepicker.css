@@ -113,8 +113,36 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	float : left;
 }
 
+.material_datepicker_container .portrait_header {
+	padding: 20px;
+    background: rgb(0, 151, 167);
+    color: rgba(255, 255, 255, .6);
+    height: 72px;
+}
+
 .material_datepicker_container .landscape_header .landscape_header_content {
 	padding : 20px;	
+}
+
+.material_datepicker_container .portrait_header .year {
+	font-weight : 700;
+	font-size : 16px;
+}
+
+.material_datepicker_container .portrait_header .date {
+	font-weight : 700;
+	font-size : 32px;
+	padding-top : 10px;
+}
+
+.material_datepicker_container .portrait_header .date.active, .material_datepicker_container .portrait_header .year.active {
+	color : rgba(255, 255, 255, 1);
+}
+
+
+
+.material_datepicker_container .portrait_header .year:hover, .material_datepicker_container .portrait_header .date:hover {
+	cursor : pointer;
 }
 
 .material_datepicker_container .landscape_header .landscape_header_content .year {
@@ -131,15 +159,48 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     padding-top: 10px;
 }
 
-.material_datepicker_container .landscape_header .landscape_header_content .date_show_down {
+.material_datepicker_container .portrait_header .date_show_up {
 	position: absolute;
     height: 270px;
-    width: 128px;
-    top: 30px;
+    width: 270px;
+    top: 40px;
     left: 20px;
     transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     opacity: 1;
-    transform: translate3d(0px, 9px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+}
+
+.material_datepicker_container .portrait_header .date_hide_up {
+	position: absolute;
+    height: 270px;
+    width: 270px;
+    top: 40px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 0;
+    transform: translate3d(140px, 0px, 0px);
+}
+
+.material_datepicker_container .portrait_header .date_hide_down {
+	position: absolute;
+    height: 270px;
+    width: 270px;
+    top: 40px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 0;
+    transform: translate3d(-20px, 0px, 0px);
+}
+
+.material_datepicker_container .portrait_header .date_show_down {
+	position: absolute;
+    height: 270px;
+    width: 270px;
+    top: 40px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px);
 }
 
 .material_datepicker_container .landscape_header .landscape_header_content .date_hide_up {
@@ -175,11 +236,22 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     transform: translate3d(0px, 200px, 0px);
 }
 
+.material_datepicker_container .landscape_header .landscape_header_content .date_show_down {
+	position: absolute;
+    height: 270px;
+    width: 128px;
+    top: 30px;
+    left: 20px;
+    transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    opacity: 1;
+    transform: translate3d(0px, 9px, 0px);
+}
+
 .material_datepicker_container .landscape_header .landscape_header_content .datepicker_label_inactive {
 	color: rgba(255, 255, 255, 0.8);
 }
 
-.material_datepicker_container .landscape_header .landscape_header_content .datepicker_label_active {
+.material_datepicker_container .datepicker_label_active {
 	color: rgba(255, 255, 255, 1);
 }
 
@@ -217,6 +289,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	background : #fff;
 	color : #2e2e2e;
 	position : relative;
+}
+
+.material_datepicker_container .portrait_content .action {
+	clear: both;
+    text-align: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .material_datepicker_container .landscape_content .action {

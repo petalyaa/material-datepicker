@@ -122,6 +122,7 @@ MaterialDatepicker.prototype.draw = function(){
 		renderLandscapeDatepicker();
 	} else {
 		orientationClass = 'datepicker_potrait';
+		renderPortraitDatepicker();
 	}
 	datepicker.className = 'material_datepicker_container material_datepicker_hide ' + orientationClass;
 	overlay.className = 'material_datepicker_overlay material_datepicker_overlay_hide';
@@ -144,6 +145,113 @@ MaterialDatepicker.prototype.draw = function(){
 	this.orientationClass = orientationClass;
 	this.overlay = overlay;
 	this.datepicker = datepicker;
+	
+	function renderPortraitDatepicker() {
+		var header = document.createElement('div');
+		var content = document.createElement('div');
+		var dateView = document.createElement('div');
+		var yearView = document.createElement('div');
+		
+		content.className = 'portrait_content';
+		header.className = 'portrait_header';
+		
+		var year = document.createElement('div');
+		var date = document.createElement('div');
+		
+		year.className = 'year';
+		date.className = 'date';
+		
+		year.onclick = function(){
+			year.className = 'year datepicker_label_active';
+			date.className = 'date';
+			dateView.style.display = 'none';
+			yearView.style.display = 'block';
+			var initYear = parentThis.initialDate.getFullYear();
+			initYear = initYear - 3;
+			var scrollYearLi = document.getElementById(parentThis.linkItemPrefixId + initYear);
+			if(scrollYearLi && scrollYearLi != null)
+				scrollYearLi.scrollIntoView();
+			parentThis.currentActiveView = 'year';
+		};
+		
+		date.onclick = function(){
+			year.className = 'year';
+			date.className = 'date datepicker_label_active';
+			dateView.style.display = 'block';
+			yearView.style.display = 'none';
+			parentThis.currentActiveView = 'date';
+		};
+		
+		header.appendChild(year);
+		header.appendChild(date);
+		
+		parentThis.dateLabel = date;
+		parentThis.yearLabel = year;
+		
+		var dateViewYearSection = document.createElement('div');
+		var arrowLeft = document.createElement('div');
+		var dateViewYearLabel = document.createElement('div');
+		var arrowRight = document.createElement('div');
+		var dateViewYearLabelContainer = document.createElement('div');
+		dateViewYearSection.className = 'date_view_year_section';
+		arrowLeft.className = 'year_section_left_arrow';
+		arrowRight.className = 'year_section_right_arrow';
+		dateViewYearLabel.className = 'date_view_year_label';
+		dateViewYearLabelContainer.className = 'date_view_year_label_container';
+		dateViewYearLabel.appendChild(dateViewYearLabelContainer);
+		parentThis.calendarYearHeader = dateViewYearLabelContainer;
+		arrowLeft.appendChild(getLeftArrow());
+		arrowRight.appendChild(getRightArrow());
+		dateViewYearSection.appendChild(arrowLeft);
+		dateViewYearSection.appendChild(dateViewYearLabel);
+		dateViewYearSection.appendChild(arrowRight);
+		dateView.appendChild(dateViewYearSection);
+		
+		var calendar = document.createElement('div');
+		var initialDay = parentThis.initialDayName;
+		calendar.className = 'datepicker_calendar';
+		for(var i = 0; i < initialDay.length; i++) {
+			var span = document.createElement('span');
+			span.className = 'day_header_label';
+			span.innerHTML = initialDay[i];
+			calendar.appendChild(span);
+		}
+		var clearDiv = document.createElement('div');
+		clearDiv.className = 'clearfix';
+		calendar.appendChild(clearDiv);
+		dateView.appendChild(calendar);
+		
+		var calendarDateHolder = document.createElement('div');
+		parentThis.calendarDateHolder = calendarDateHolder;
+		calendar.appendChild(calendarDateHolder);
+		
+		yearView.appendChild(generateYearView());
+		
+		content.appendChild(yearView);
+		content.appendChild(dateView);
+		
+		var action = document.createElement('div');
+		action.className = 'action';
+		var cancelBtn = document.createElement('button');
+		cancelBtn.innerHTML = 'CANCEL';
+		cancelBtn.className = 'datepicker-btn datepicker-btn-link ripple';
+		cancelBtn.onclick = function(){
+			onCancel();
+		};
+		action.appendChild(cancelBtn);
+		var okBtn = document.createElement('button');
+		okBtn.innerHTML = 'OK';
+		okBtn.className = 'datepicker-btn datepicker-btn-link ripple';
+		okBtn.onclick = function(){
+			onOKClick();
+		};
+		action.appendChild(okBtn);
+		
+		content.appendChild(action);
+		
+		datepicker.appendChild(header);
+		datepicker.appendChild(content);
+	}
 	
 	function renderLandscapeDatepicker() {
 		var landscapeHeader = document.createElement('div');
@@ -260,6 +368,7 @@ MaterialDatepicker.prototype.draw = function(){
 		var div = document.createElement('div');
 		div.className = 'landscape_year_view';
 		var ul = document.createElement('ul');
+		ul.style['padding-left'] = '0';
 		var startYear = 1900;
 		var endYear = 2100;
 		var initYear = parentThis.initialDate.getFullYear();
@@ -369,9 +478,11 @@ MaterialDatepicker.prototype.printOptions = function() {
 MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 	var parentThis = this;
 	var monthLabel = parentThis.longMonthName[date.getMonth()];
-	this.calendarYearHeader.innerHTML = monthLabel + ' ' + date.getFullYear();
+	if(this.calendarYearHeader)
+		this.calendarYearHeader.innerHTML = monthLabel + ' ' + date.getFullYear();
 	var dateHolder = parentThis.calendarDateHolder;
-	dateHolder.innerHTML = '';
+	if(dateHolder)
+		dateHolder.innerHTML = '';
 	
 	var month = date.getMonth();
 	var year = date.getFullYear();
@@ -392,7 +503,8 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 	for(var i = 0; i < startDate.getDay(); i++) { // Append empty space if current month's day not start at sunday
 		var span = document.createElement('span');
 		span.className = 'date_block';
-		dateHolder.appendChild(span);
+		if(dateHolder)
+			dateHolder.appendChild(span);
 	}
 	for(var i = 1; i <= totalDays; i++) {
 		var span = document.createElement('span');
@@ -446,7 +558,8 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 		text.innerHTML = i;
 		span.appendChild(text);
 		span.className = 'date_block ' + dateBlockCursor;
-		dateHolder.appendChild(span);
+		if(dateHolder)
+			dateHolder.appendChild(span);
 	}
 	
 	function onDateBlockClick(e) {
@@ -515,7 +628,10 @@ MaterialDatepicker.prototype.populateHeaderContent = function(date){
 	function write() {
 		parentThis.currentHeaderDate = date;
 		parentThis.yearLabel.innerHTML = date.getFullYear();
-		parentThis.dateLabel.innerHTML = dayLabel + ',<br /> ' + monthLabel + ' ' + dateLabel;
+		var breakLine = '';
+		if(parentThis.options.orientation != 'portrait')
+			breakLine = '<br />';
+		parentThis.dateLabel.innerHTML = dayLabel + ',' + breakLine + ' ' + monthLabel + ' ' + dateLabel;
 	}
 	
 };
