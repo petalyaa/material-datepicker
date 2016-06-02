@@ -30,6 +30,9 @@
 
 MaterialDatepicker.prototype.constructor = MaterialDatepicker;
 
+/** 
+ * Utility class for object to extend with another object. 
+ */
 Object.prototype.extend = function(obj) {
     for (var i in obj) {
     	this[i] = obj[i];
@@ -37,21 +40,22 @@ Object.prototype.extend = function(obj) {
     return this;
  };
 
-function MaterialDatepicker(o) {
+/**
+ * Main constructor for the datepicker. 
+ */
+ function MaterialDatepicker(o) {
 	var defaultOptions = {
 		orientation : 'landscape',
 		debugMode : false,
 		closeOnBlur : true,
 		responsive : false
 	};
-
 	this.eventBeforeShow = "md.before.show";
 	this.eventAfterShow = "md.after.show";
 	this.eventBeforeHide = "md.before.hide";
 	this.eventAfterHide = "md.after.hide";
 	this.eventBeforeCancel = "md.before.cancel";
 	this.eventAfterCancel = "md.after.cancel";
-	
 	this.initialDayName = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 	this.shortDayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	this.monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -69,50 +73,55 @@ function MaterialDatepicker(o) {
 	this.originalOrientation = this.options.orientation;
 	var isResponsive = this.options.responsive;
 	this.init();
-	
 	var parentThis = this;
 	if(isResponsive) {
 		window.onresize = triggerResize;
 		triggerResize();
 	}
-	
-	
-	
+	this.resizeTimer = null;
 	function triggerResize() {
-		var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		if(w < 490) {
-			parentThis.options.orientation = 'portrait';
-			parentThis.destroy();
-			parentThis.init();
-			if(parentThis.isVisible) {
-				parentThis.isVisible = false;
-				parentThis.originalOpts.initialDate = parentThis.selectedDate;
-				parentThis.show(parentThis.originalOpts);
+		if(parentThis.resizeTimer != null)
+			clearTimeout(parentThis.resizeTimer);
+		parentThis.resizeTimer = setTimeout(function() {
+			console.log('done resizing...');
+			var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+			if(w < 490) {
+				parentThis.options.orientation = 'portrait';
+				parentThis.destroy();
+				parentThis.init();
+				if(parentThis.isVisible) {
+					parentThis.isVisible = false;
+					parentThis.originalOpts.initialDate = parentThis.selectedDate;
+					parentThis.show(parentThis.originalOpts);
+				}
+			} else {
+				parentThis.options.orientation = parentThis.originalOrientation;
+				parentThis.destroy();
+				parentThis.init();
+				if(parentThis.isVisible) {
+					parentThis.isVisible = false;
+					parentThis.originalOpts.initialDate = parentThis.selectedDate;
+					parentThis.show(parentThis.originalOpts);
+				}
 			}
-		} else {
-			parentThis.options.orientation = parentThis.originalOrientation;
-			parentThis.destroy();
-			parentThis.init();
-			if(parentThis.isVisible) {
-				parentThis.isVisible = false;
-				parentThis.originalOpts.initialDate = parentThis.selectedDate;
-				parentThis.show(parentThis.originalOpts);
-			}
-		}
-		var headerDate = parentThis.currentHeaderDate;
-		if(!headerDate || headerDate == null)
-			headerDate = parentThis.initialDate;
-		var dayLabel = parentThis.shortDayName[headerDate.getDay()];
-		var monthLabel = parentThis.monthName[headerDate.getMonth()];
-		parentThis.yearLabel.innerHTML = headerDate.getFullYear();
-		var dateLabel = headerDate.getDate();
-		var breakLine = '';
-		if(parentThis.options.orientation != 'portrait')
-			breakLine = '<br />';
-		parentThis.dateLabel.innerHTML = dayLabel + ',' + breakLine + ' ' + monthLabel + ' ' + dateLabel;
+			var headerDate = parentThis.currentHeaderDate;
+			if(!headerDate || headerDate == null)
+				headerDate = parentThis.initialDate;
+			var dayLabel = parentThis.shortDayName[headerDate.getDay()];
+			var monthLabel = parentThis.monthName[headerDate.getMonth()];
+			parentThis.yearLabel.innerHTML = headerDate.getFullYear();
+			var dateLabel = headerDate.getDate();
+			var breakLine = '';
+			if(parentThis.options.orientation != 'portrait')
+				breakLine = '<br />';
+			parentThis.dateLabel.innerHTML = dayLabel + ',' + breakLine + ' ' + monthLabel + ' ' + dateLabel;
+		}, 250);
 	}
 }
 
+/**
+ * Perform event action by event name
+ */
 MaterialDatepicker.prototype.executeEvent = function(eventName){
 	var callback = null;
 	if(this.events && this.events != null && this.events.length > 0) {
@@ -127,12 +136,13 @@ MaterialDatepicker.prototype.executeEvent = function(eventName){
 	if(callback != null) callback(this);
 };
 
+/**
+ * Destroy the datepicker DOM element and class 
+ */
 MaterialDatepicker.prototype.destroy = function(){
 	var body = document.body;
 	var overlay = this.overlay;
-	
 	destroyRecursive(overlay);
-	
 	function destroyRecursive(node) {
 		while (node.hasChildNodes()) {
 			clear(node.firstChild);
@@ -141,7 +151,6 @@ MaterialDatepicker.prototype.destroy = function(){
 			node.parentNode.removeChild(node);
 		node = null;
 	}
-
 	function clear(node) {
 		while (node.hasChildNodes()) {
 			clear(node.firstChild);
