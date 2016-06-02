@@ -66,13 +66,14 @@ To construct simple datepicker, simply use `new MaterialDatepicker()`. But you c
 | orientation | string    | landscape,portrait | landscape     | No       | Orientation for the datepicker                                              |
 | debugMode   | boolean   | true,false         | false         | No       | Flag either to display the debug line in the console or not                         |
 | closeOnBlur | boolean   | true,false         | true          | No       | Flag either to close the datepicker when user click outside the datepicker          |
-
+| responsive  | boolean   | true,false         | false         | No       | Flag to enable responsive view for the datepicker.                          |
 For example :
 ```javascript
 var options = {
-    orientation : 'landscape',
-    debugMode : true,
-    closeOnBlur : true
+    orientation : 'landscape', // Show in landscape mode when viewing in wider screen
+    debugMode : true, // show verbose log to the browser console
+    closeOnBlur : true, // close when click outside datepicker
+    responsive : true // enable responsive view for the datepicker
 };
 var datepicker = new MaterialDatepicker(options);
 ```
