@@ -63,7 +63,7 @@ To construct simple datepicker, simply use `new MaterialDatepicker()`. But you c
 
 | Option Name | Data Type | Accepted Value       | Default Value | Required | Description                                                                         |
 |-------------|-----------|----------------------|---------------|----------|-------------------------------------------------------------------------------------|
-| orientation | string    | landscape,portrait | landscape     | No       | Orientation for the datepicker (__NOTE__ : For portrait, still not working for now) |
+| orientation | string    | landscape,portrait | landscape     | No       | Orientation for the datepicker                                              |
 | debugMode   | boolean   | true,false         | false         | No       | Flag either to display the debug line in the console or not                         |
 | closeOnBlur | boolean   | true,false         | true          | No       | Flag either to close the datepicker when user click outside the datepicker          |
 
@@ -129,7 +129,7 @@ datepicker.on("md.before.show", function(e){
 
 ### Issues ###
 * Not responsive (Now only support desktop view)
-* Only landscape datepicker supported. (portrait view still under development)
+* ~~Only landscape datepicker supported. (portrait view still under development)~~
 
 [Back to Top](#material-datepicker)
 
