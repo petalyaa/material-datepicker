@@ -41,9 +41,10 @@ function MaterialDatepicker(o) {
 	var defaultOptions = {
 		orientation : 'landscape',
 		debugMode : false,
-		closeOnBlur : true	
+		closeOnBlur : true,
+		responsive : false
 	};
-	
+
 	this.eventBeforeShow = "md.before.show";
 	this.eventAfterShow = "md.after.show";
 	this.eventBeforeHide = "md.before.hide";
@@ -65,7 +66,51 @@ function MaterialDatepicker(o) {
 	this.linkItemPrefixId = this.generateRandomId();
 	this.onDateSelectedCallback = null;
 	this.options = defaultOptions.extend(o);
+	this.originalOrientation = this.options.orientation;
+	var isResponsive = this.options.responsive;
 	this.init();
+	
+	var parentThis = this;
+	if(isResponsive) {
+		window.onresize = triggerResize;
+		triggerResize();
+	}
+	
+	
+	
+	function triggerResize() {
+		var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		if(w < 490) {
+			parentThis.options.orientation = 'portrait';
+			parentThis.destroy();
+			parentThis.init();
+			if(parentThis.isVisible) {
+				parentThis.isVisible = false;
+				parentThis.originalOpts.initialDate = parentThis.selectedDate;
+				parentThis.show(parentThis.originalOpts);
+			}
+		} else {
+			parentThis.options.orientation = parentThis.originalOrientation;
+			parentThis.destroy();
+			parentThis.init();
+			if(parentThis.isVisible) {
+				parentThis.isVisible = false;
+				parentThis.originalOpts.initialDate = parentThis.selectedDate;
+				parentThis.show(parentThis.originalOpts);
+			}
+		}
+		var headerDate = parentThis.currentHeaderDate;
+		if(!headerDate || headerDate == null)
+			headerDate = parentThis.initialDate;
+		var dayLabel = parentThis.shortDayName[headerDate.getDay()];
+		var monthLabel = parentThis.monthName[headerDate.getMonth()];
+		parentThis.yearLabel.innerHTML = headerDate.getFullYear();
+		var dateLabel = headerDate.getDate();
+		var breakLine = '';
+		if(parentThis.options.orientation != 'portrait')
+			breakLine = '<br />';
+		parentThis.dateLabel.innerHTML = dayLabel + ',' + breakLine + ' ' + monthLabel + ' ' + dateLabel;
+	}
 }
 
 MaterialDatepicker.prototype.executeEvent = function(eventName){
@@ -82,9 +127,33 @@ MaterialDatepicker.prototype.executeEvent = function(eventName){
 	if(callback != null) callback(this);
 };
 
+MaterialDatepicker.prototype.destroy = function(){
+	var body = document.body;
+	var overlay = this.overlay;
+	
+	destroyRecursive(overlay);
+	
+	function destroyRecursive(node) {
+		while (node.hasChildNodes()) {
+			clear(node.firstChild);
+		}
+		if(node.parentNode != null)
+			node.parentNode.removeChild(node);
+		node = null;
+	}
+
+	function clear(node) {
+		while (node.hasChildNodes()) {
+			clear(node.firstChild);
+		}
+		if(node.parentNode != null)
+			node.parentNode.removeChild(node);
+		node = null;
+	}
+};
+
 MaterialDatepicker.prototype.generateRandomId = function(){
 	var text = 'material_datepicker_item_' + getRandomText() + "_" + getRandomNumber() + "_";
-
 	function getRandomText() {
 		var s = '';
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -705,7 +774,7 @@ MaterialDatepicker.prototype.show = function(opts){
 				this.initialDate = initialDate;
 			}
 		}
-		
+		this.originalOpts = opts;
 		this.renderContent();
 		this.dateLabel.click();
 		this.overlay.className = 'material_datepicker_overlay material_datepicker_overlay_show';
