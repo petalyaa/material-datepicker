@@ -126,6 +126,9 @@ datepicker.on("md.before.show", function(e){
 
 ![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/2.png)
 
+![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/3.png)
+![alt tag](https://raw.githubusercontent.com/petalyaa/material-datepicker/master/screenshots/4.png)
+
 [Back to Top](#material-datepicker)
 
 ### Issues ###
