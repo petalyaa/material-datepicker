@@ -161,7 +161,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .material_datepicker_container .portrait_header .date_show_up {
 	position: absolute;
-    height: 270px;
+    height: 48px;
     width: 270px;
     top: 40px;
     left: 20px;
@@ -172,7 +172,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .material_datepicker_container .portrait_header .date_hide_up {
 	position: absolute;
-    height: 270px;
+    height: 48px;
     width: 270px;
     top: 40px;
     left: 20px;
@@ -183,7 +183,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .material_datepicker_container .portrait_header .date_hide_down {
 	position: absolute;
-    height: 270px;
+    height: 48px;
     width: 270px;
     top: 40px;
     left: 20px;
@@ -194,7 +194,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .material_datepicker_container .portrait_header .date_show_down {
 	position: absolute;
-    height: 270px;
+    height: 48px;
     width: 270px;
     top: 40px;
     left: 20px;
