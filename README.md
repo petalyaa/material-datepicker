@@ -129,7 +129,7 @@ datepicker.on("md.before.show", function(e){
 [Back to Top](#material-datepicker)
 
 ### Issues ###
-* Not responsive (Now only support desktop view)
+* ~~Not responsive (Now only support desktop view)~~
 * ~~Only landscape datepicker supported. (portrait view still under development)~~
 
 [Back to Top](#material-datepicker)
