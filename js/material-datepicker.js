@@ -44,12 +44,34 @@ Object.prototype.extend = function(obj) {
  * Main constructor for the datepicker. 
  */
  function MaterialDatepicker(o) {
+	this.themes = [{
+		name : 'cyan',
+		colors : {
+			primaryColor : '#0097A7',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#000000',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#E91E63'
+		}
+	}];
+	
+	this.defaultTheme = this.themes[0];
 	var defaultOptions = {
 		orientation : 'landscape',
 		debugMode : false,
 		closeOnBlur : true,
-		responsive : false
+		responsive : false,
+		theme : this.defaultTheme.name,
+		colors : {
+			primaryColor : this.defaultTheme.primaryColor,
+			secondaryColor : this.defaultTheme.secondaryColor,
+			primaryTextColor : this.defaultTheme.primaryTextColor,
+			secondaryTextColor : this.defaultTheme.secondaryTextColor,
+			headerTextColor : this.defaultTheme.headerTextColor
+		}
 	};
+	
 	this.eventBeforeShow = "md.before.show";
 	this.eventAfterShow = "md.after.show";
 	this.eventBeforeHide = "md.before.hide";
@@ -67,14 +89,21 @@ Object.prototype.extend = function(obj) {
 	this.overlay = null;
 	this.events = [];
 	this.currentActiveView = 'date';
-	this.linkItemPrefixId = this.generateRandomId();
 	this.onDateSelectedCallback = null;
 	this.options = defaultOptions.extend(o);
 	this.originalOrientation = this.options.orientation;
 	var isResponsive = this.options.responsive;
+	this.linkItemPrefixId = this.generateRandomId();
+	this.logObject("Original options", o);
+	this.logObject("Options set to", this.options);
+	this.log("Original orientation is set to '" + this.originalOrientation + "'");
+	this.log("IsResponsive is set to : " + isResponsive);
+	
+	
 	this.init();
 	var parentThis = this;
 	if(isResponsive) {
+		this.log("Binding onresize event to datepicker");
 		window.onresize = triggerResize;
 		triggerResize();
 	}
@@ -83,7 +112,7 @@ Object.prototype.extend = function(obj) {
 		if(parentThis.resizeTimer != null)
 			clearTimeout(parentThis.resizeTimer);
 		parentThis.resizeTimer = setTimeout(function() {
-			console.log('done resizing...');
+			parentThis.log('done resizing...');
 			var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 			if(w < 490) {
 				parentThis.options.orientation = 'portrait';
@@ -124,6 +153,7 @@ Object.prototype.extend = function(obj) {
  */
 MaterialDatepicker.prototype.executeEvent = function(eventName){
 	var callback = null;
+	this.log("Trying to perform event : " + eventName);
 	if(this.events && this.events != null && this.events.length > 0) {
 		for(var i = 0; i < this.events.length; i++) {
 			var event = this.events[i];
@@ -133,16 +163,23 @@ MaterialDatepicker.prototype.executeEvent = function(eventName){
 			}
 		}
 	}
-	if(callback != null) callback(this);
+	if(callback != null) {
+		this.log("Event " + eventName + " is valid, executing now.");
+		callback(this);
+	} else {
+		this.log("Event " + eventName + " is not defined, ignoring the event.");
+	}
 };
 
 /**
  * Destroy the datepicker DOM element and class 
  */
 MaterialDatepicker.prototype.destroy = function(){
+	var parentThis = this;
 	var body = document.body;
-	var overlay = this.overlay;
+	var overlay = parentThis.overlay;
 	destroyRecursive(overlay);
+	parentThis.log("Destroying datepicker : " + parentThis.linkItemPrefixId);
 	function destroyRecursive(node) {
 		while (node.hasChildNodes()) {
 			clear(node.firstChild);
@@ -163,6 +200,7 @@ MaterialDatepicker.prototype.destroy = function(){
 
 MaterialDatepicker.prototype.generateRandomId = function(){
 	var text = 'material_datepicker_item_' + getRandomText() + "_" + getRandomNumber() + "_";
+	this.log("Generating random id to be use for the datepicker return result : " + text);
 	function getRandomText() {
 		var s = '';
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -183,12 +221,59 @@ MaterialDatepicker.prototype.on = function(event, callback){
 };
 
 MaterialDatepicker.prototype.init = function(){
-	this.log('Initializing material datepicker...');
+	this.log('Initializing material datepicker.');
 	this.draw();
+	this.log('Rendering theme for the datepicker.');
+	this.renderTheme();
+};
+
+MaterialDatepicker.prototype.getThemePalette = function(){
+	var theme = this.options.theme;
+	this.logObject("Trying to get theme palette from", theme);
+	var colors = null;
+	if(theme && theme != 'null' && theme.name != 'custom') {
+		for(var i = 0; i < this.themes.length; i++) {
+			if(theme == this.themes[i].name) {
+				colors = this.themes[i].colors;
+			}
+		}
+	} else {
+		if(!theme || theme == null) {
+			colors = this.defaultTheme.colors;
+		}
+		if(theme.name == 'custom') {
+			colors = this.options.colors;
+		}
+	}
+	if(colors == null) {
+		this.log("Theme not found. Reverting to default theme : " + this.defaultTheme.name);
+		colors = this.defaultTheme.colors;
+	} 
+	return colors;
+};
+
+MaterialDatepicker.prototype.renderTheme = function(){
+	var colors = this.getThemePalette();
+	var primaryColor = colors.primaryColor;
+	var secondaryColor = colors.secondaryColor;
+	var headerTextColor = colors.headerTextColor;
+	if(primaryColor) {
+		this.header.style.background = primaryColor;
+		this.okButton.style.color = primaryColor;
+		this.cancelButton.style.color = primaryColor;
+	}
+	if(secondaryColor)
+		this.content.style.background = secondaryColor;
+	if(headerTextColor) {
+		this.yearLabel.style.color = headerTextColor;
+		this.dateLabel.style.color = headerTextColor;
+	}
+		
 };
 
 MaterialDatepicker.prototype.draw = function(){
 	var parentThis = this;
+	var themePalette = parentThis.getThemePalette();
 	var body = document.body;
 	var isClickOnDatepicker = false;
 	var overlay = document.createElement("div");
@@ -238,7 +323,8 @@ MaterialDatepicker.prototype.draw = function(){
 		
 		year.className = 'year';
 		date.className = 'date';
-		
+		year.className = 'year datepicker_label_inactive';
+		date.className = 'date datepicker_label_inactive';
 		year.onclick = function(){
 			year.className = 'year datepicker_label_active';
 			date.className = 'date';
@@ -262,6 +348,9 @@ MaterialDatepicker.prototype.draw = function(){
 		
 		header.appendChild(year);
 		header.appendChild(date);
+		
+		parentThis.header = header;
+		parentThis.content = content;
 		
 		parentThis.dateLabel = date;
 		parentThis.yearLabel = year;
@@ -323,6 +412,8 @@ MaterialDatepicker.prototype.draw = function(){
 		okBtn.onclick = function(){
 			onOKClick();
 		};
+		parentThis.okButton = okBtn;
+		parentThis.cancelButton = cancelBtn;
 		action.appendChild(okBtn);
 		
 		content.appendChild(action);
@@ -346,6 +437,8 @@ MaterialDatepicker.prototype.draw = function(){
 		var year = document.createElement('div');
 		var date = document.createElement('div');
 		
+		parentThis.content = landscapeContent;
+		parentThis.header = landscapeHeader;
 		year.className = 'year datepicker_label_inactive';
 		date.className = 'date datepicker_label_inactive';
 		landscapeHeaderContent.className = 'landscape_header_content';
@@ -437,6 +530,8 @@ MaterialDatepicker.prototype.draw = function(){
 			onOKClick();
 		};
 		action.appendChild(okBtn);
+		parentThis.okButton = okBtn;
+		parentThis.cancelButton = cancelBtn;
 		
 		landscapeContent.appendChild(action);
 		datepicker.appendChild(landscapeContent);
@@ -478,9 +573,12 @@ MaterialDatepicker.prototype.draw = function(){
 		var allLi = ul.childNodes;
 		if(allLi && allLi != null && allLi.length > 0) {
 			for(var i = 0; i < allLi.length; i++) {
+				allLi[i].firstChild.style.color = themePalette.primaryTextColor;
 				allLi[i].className = 'year_list_item';
+				
 			}
 		}
+		li.firstChild.style.color = themePalette.selectedYearTextColor;
 		li.className = 'year_list_item active';
 		var date = parentThis.initialDate;
 		var selectedDate = parentThis.selectedDate;
@@ -498,6 +596,7 @@ MaterialDatepicker.prototype.draw = function(){
 		a.style.padding = '0';
 		i.className = 'fa fa-angle-left';
 		i.style['font-weight'] = '700';
+		i.style.color = themePalette.primaryColor;
 		a.appendChild(i);
 		a.onclick = onLeftArrowClick;
 		return a;
@@ -511,6 +610,7 @@ MaterialDatepicker.prototype.draw = function(){
 		a.style.padding = '0';
 		i.className = 'fa fa-angle-right';
 		i.style['font-weight'] = '700';
+		i.style.color = themePalette.primaryColor;
 		a.appendChild(i);
 		a.onclick = onRightArrowClick;
 		return a;
@@ -520,6 +620,7 @@ MaterialDatepicker.prototype.draw = function(){
 		var date = parentThis.initialDate;
 		date.setDate(1);
 		date.setMonth(date.getMonth() + 1);
+		parentThis.log("Right arrow click. Showing calendar for : " + parentThis.monthName[date.getMonth()] + "/" + date.getFullYear());
 		parentThis.renderCalendar(date, parentThis.selectedDate);
 	}
 	
@@ -527,6 +628,7 @@ MaterialDatepicker.prototype.draw = function(){
 		var date = parentThis.initialDate;
 		date.setDate(1);
 		date.setMonth(date.getMonth() - 1);
+		parentThis.log("Left arrow click. Showing calendar for : " + parentThis.monthName[date.getMonth()] + "/" + date.getFullYear());
 		parentThis.renderCalendar(date, parentThis.selectedDate);
 	}
 	
@@ -545,7 +647,23 @@ MaterialDatepicker.prototype.draw = function(){
 	}
 };
 
+MaterialDatepicker.prototype.logObject = function(msg, object){
+	msg = msg + " : " + JSON.stringify(object);
+	this.log(msg);
+};
+
 MaterialDatepicker.prototype.log = function(msg) {
+	if(typeof msg == 'object')
+		msg = JSON.stringify(msg);
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	var day = date.getDate();
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var seconds = date.getSeconds();
+	var dateStr = day + "/" + this.monthName[month] + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+	msg = dateStr + " > " + msg;
 	if(this.options.debugMode) console.log(msg);
 };
 
@@ -555,6 +673,8 @@ MaterialDatepicker.prototype.printOptions = function() {
 
 MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 	var parentThis = this;
+	parentThis.log('Rendering calendar.');
+	var themePalette = parentThis.getThemePalette();
 	var monthLabel = parentThis.longMonthName[date.getMonth()];
 	if(this.calendarYearHeader)
 		this.calendarYearHeader.innerHTML = monthLabel + ' ' + date.getFullYear();
@@ -586,7 +706,7 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 	}
 	for(var i = 1; i <= totalDays; i++) {
 		var span = document.createElement('span');
-		var textColor = '#000';
+		var textColor = themePalette.primaryTextColor;
 		var dateBlockCursor = 'date_block_cursor_inactive';
 		span.setAttribute('data-is-active', "false");
 		span.setAttribute('data-full-year', year);
@@ -596,8 +716,9 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 			var selectedBg = document.createElement('span');
 			selectedBg.className = 'date_block_selected';
 			span.appendChild(selectedBg);
+			selectedBg.style.background = themePalette.primaryColor;
 			span.setAttribute('data-is-active', "true");
-			textColor = '#FFF';
+			textColor = themePalette.secondaryTextColor;
 			dateBlockCursor = 'date_block_cursor_active';
 			parentThis.selectedBlock = span;
 			var sel = new Date(year, month, i);
@@ -613,8 +734,9 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 			var hE = this.getElementsByClassName('hover_handler');
 			var hTE = this.getElementsByClassName('hover_text_handler');
 			if(hE[0] && hTE[0]) {
+				hE[0].style.background = themePalette.primaryColor;
 				hE[0].className = 'hover_handler date_block_hover_in';
-				hTE[0].style.color = '#fff';
+				hTE[0].style.color = themePalette.secondaryTextColor;
 			}
 		};
 		span.onmouseout = function(){
@@ -623,8 +745,9 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 			var hE = this.getElementsByClassName('hover_handler');
 			var hTE = this.getElementsByClassName('hover_text_handler');
 			if(hE[0] && hTE[0]) {
+				hE[0].style.background = themePalette.primaryColor;
 				hE[0].className = 'hover_handler date_block_hover_out';
-				hTE[0].style.color = '#000';
+				hTE[0].style.color = themePalette.primaryTextColor;
 			}
 		};
 		span.onclick = onDateBlockClick;
@@ -649,7 +772,7 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 			var handler = currentlySelectedBlock.getElementsByClassName('date_block_selected');
 			var textHandler = currentlySelectedBlock.getElementsByClassName('hover_text_handler');
 			handler[0].className = 'hover_handler date_block_hover_out';
-			textHandler[0].style.color = 'rgba(0,0,0,1)';
+			textHandler[0].style.color = themePalette.primaryTextColor;
 			currentlySelectedBlock.className = 'date_block date_block_cursor_inactive';
 			currentlySelectedBlock.setAttribute('data-is-active', "false");
 		}
@@ -657,10 +780,15 @@ MaterialDatepicker.prototype.renderCalendar = function(date, selectedDate) {
 		clickedSpan.className = 'date_block date_block_cursor_active';
 		var clickSpanHandler = clickedSpan.getElementsByClassName('hover_handler');
 		var clickSpanTextHandler = clickedSpan.getElementsByClassName('hover_text_handler');
+		clickSpanHandler[0].style.background = themePalette.primaryColor;
 		clickSpanHandler[0].className = 'date_block_selected';
-		clickSpanTextHandler[0].style.color = '#FFF';
+		clickSpanTextHandler[0].style.color = themePalette.secondaryTextColor;
 		parentThis.selectedBlock = clickedSpan;
-		var date = new Date(clickedSpan.getAttribute("data-full-year"), clickedSpan.getAttribute("data-month"), clickedSpan.getAttribute("data-date"));
+		var dataYear = clickedSpan.getAttribute("data-full-year");
+		var dataMonth = clickedSpan.getAttribute("data-month");
+		var dataDate = clickedSpan.getAttribute("data-date");
+		var date = new Date(dataYear, dataMonth, dataDate);
+		parentThis.log("Click on date : " + dataDate + "/" + parentThis.monthName[dataMonth] + "/" + dataYear);
 		parentThis.populateHeaderContent(date);
 		parentThis.selectedDate = date;
 	}
@@ -681,6 +809,7 @@ MaterialDatepicker.prototype.populateHeaderContent = function(date){
 	var dateActiveClass = 'datepicker_label_inactive';
 	if(currentActiveView == 'date')
 		dateActiveClass = 'datepicker_label_active';
+	parentThis.log("Populating header for date : " + date.getDate() + "/" + parentThis.monthName[date.getMonth()] + "/" + date.getFullYear());
 	if(currentHeaderDate && currentHeaderDate != null) {
 		var currentYear = currentHeaderDate.getFullYear();
 		var selectedYear = date.getFullYear();
@@ -740,23 +869,6 @@ MaterialDatepicker.prototype.renderContent = function(){
 	}
 };
 
-MaterialDatepicker.prototype.hide = function(){
-	if(this.isVisible) {
-		var parentThis = this;
-		parentThis.log('Hiding datepicker...');
-		parentThis.executeEvent(parentThis.eventBeforeHide);
-		parentThis.datepicker.className = 'material_datepicker_container ' + parentThis.orientationClass + ' material_datepicker_hide';
-		var transEnd = function(){
-			parentThis.overlay.className = 'material_datepicker_overlay material_datepicker_overlay_hide';
-			parentThis.datepicker.removeEventListener('transitionend', transEnd);
-			parentThis.executeEvent(parentThis.eventAfterHide);
-		};
-		parentThis.datepicker.addEventListener('transitionend', transEnd, false);
-		parentThis.isVisible = false;
-	}
-	
-};
-
 MaterialDatepicker.prototype.isValidDate = function(d){
 	var isValid = false;
 	if (Object.prototype.toString.call(d) === "[object Date]") {
@@ -771,9 +883,25 @@ MaterialDatepicker.prototype.isValidDate = function(d){
 	return isValid;
 };
 
+MaterialDatepicker.prototype.hide = function(){
+	if(this.isVisible) {
+		var parentThis = this;
+		parentThis.log('Hiding datepicker.');
+		parentThis.executeEvent(parentThis.eventBeforeHide);
+		parentThis.datepicker.className = 'material_datepicker_container ' + parentThis.orientationClass + ' material_datepicker_hide';
+		var transEnd = function(){
+			parentThis.overlay.className = 'material_datepicker_overlay material_datepicker_overlay_hide';
+			parentThis.datepicker.removeEventListener('transitionend', transEnd);
+			parentThis.executeEvent(parentThis.eventAfterHide);
+		};
+		parentThis.datepicker.addEventListener('transitionend', transEnd, false);
+		parentThis.isVisible = false;
+	}
+};
+
 MaterialDatepicker.prototype.show = function(opts){
 	if(!this.isVisible) {
-		this.log('Showing datepicker...');
+		this.log('Showing datepicker.');
 		this.executeEvent(this.eventBeforeShow);
 		if(opts && opts != null) {
 			var callback = opts.onDateSelected;

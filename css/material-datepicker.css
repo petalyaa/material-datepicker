@@ -48,7 +48,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }
 
 .year_list_item a {
-	color : #000;
 	text-decoration : none;
 	padding : 10px;
 	display : block;
@@ -56,7 +55,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .year_list_item.active a {
 	font-size : 24px;
-	color : #E91E63;
 	font-weight : 700;
 }
 
@@ -116,7 +114,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .material_datepicker_container .portrait_header {
 	padding: 20px;
     background: rgb(0, 151, 167);
-    color: rgba(255, 255, 255, .6);
     height: 72px;
 }
 
@@ -134,12 +131,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	font-size : 32px;
 	padding-top : 10px;
 }
-
-.material_datepicker_container .portrait_header .date.active, .material_datepicker_container .portrait_header .year.active {
-	color : rgba(255, 255, 255, 1);
-}
-
-
 
 .material_datepicker_container .portrait_header .year:hover, .material_datepicker_container .portrait_header .date:hover {
 	cursor : pointer;
@@ -248,11 +239,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }
 
 .material_datepicker_container .landscape_header .landscape_header_content .datepicker_label_inactive {
-	color: rgba(255, 255, 255, 0.8);
+	opacity : .6;
 }
 
 .material_datepicker_container .datepicker_label_active {
-	color: rgba(255, 255, 255, 1);
+	opacity : 1;
 }
 
 .datepicker-btn {
