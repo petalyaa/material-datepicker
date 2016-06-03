@@ -54,6 +54,156 @@ Object.prototype.extend = function(obj) {
 			headerTextColor : '#FFFFFF',
 			selectedYearTextColor : '#E91E63'
 		}
+	}, {
+		name : 'red',
+		colors : {
+			primaryColor : '#D32F2F',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#536DFE'
+		}
+	}, {
+		name : 'blue',
+		colors : {
+			primaryColor : '#1976D2',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#536DFE'
+		}
+	}, {
+		name : 'pink',
+		colors : {
+			primaryColor : '#E91E63',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#880E4F'
+		}
+	}, {
+		name : 'purple',
+		colors : {
+			primaryColor : '#9C27B0',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#4A148C'
+		}
+	}, {
+		name : 'deepPurple',
+		colors : {
+			primaryColor : '#673AB7',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#311B92'
+		}
+	}, {
+		name : 'indigo',
+		colors : {
+			primaryColor : '#3F51B5',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#1A237E'
+		}
+	}, {
+		name : 'lightBlue',
+		colors : {
+			primaryColor : '#03A9F4',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#000000',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#01579B'
+		}
+	}, {
+		name : 'teal',
+		colors : {
+			primaryColor : '#009688',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#004D40'
+		}
+	}, {
+		name : 'green',
+		colors : {
+			primaryColor : '#4CAF50',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#1B5E20'
+		}
+	}, {
+		name : 'amber',
+		colors : {
+			primaryColor : '#FFC107',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#FF6F00'
+		}
+	}, {
+		name : 'orange',
+		colors : {
+			primaryColor : '#FF9800',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#BF360C'
+		}
+	}, {
+		name : 'deepOrange',
+		colors : {
+			primaryColor : '#FF5722',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#E65100'
+		}
+	}, {
+		name : 'brown',
+		colors : {
+			primaryColor : '#795548',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#3E2723'
+		}
+	}, {
+		name : 'grey',
+		colors : {
+			primaryColor : '#9E9E9E',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#212121'
+		}
+	}, {
+		name : 'blueGrey',
+		colors : {
+			primaryColor : '#607D8B',
+			secondaryColor : '#FFFFFF',
+			primaryTextColor : '#212121',
+			secondaryTextColor : '#FFFFFF',
+			headerTextColor : '#FFFFFF',
+			selectedYearTextColor : '#263238'
+		}
 	}];
 	
 	this.defaultTheme = this.themes[0];
@@ -550,6 +700,7 @@ MaterialDatepicker.prototype.draw = function(){
 			li.style['list-style-type'] = 'none';
 			var a = document.createElement('a');
 			a.href = '#';
+			a.style.color = themePalette.primaryTextColor;
 			a.setAttribute('data-year', i);
 			a.setAttribute('id', parentThis.linkItemPrefixId + i);
 			a.innerHTML = i;
@@ -557,6 +708,7 @@ MaterialDatepicker.prototype.draw = function(){
 			var activeClass = '';
 			if(initYear == i) {
 				activeClass = 'active';
+				a.style.color = themePalette.selectedYearTextColor;
 			}
 			li.className = 'year_list_item ' + activeClass;
 			ul.appendChild(li);
